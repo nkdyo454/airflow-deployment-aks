@@ -15,9 +15,9 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up Azure CLI
-      uses: azure/setup-azurecli@v1
+      uses: Azure/cli@v2.1.0
       with:
-        azure-cli-version: latest
+        inlineScript: latest
 
     - name: Log in to Azure using Service Principal
       run: |
