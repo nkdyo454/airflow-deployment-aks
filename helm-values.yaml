@@ -32,6 +32,12 @@ airflow:
       type: LoadBalancer  # Use LoadBalancer to expose the Airflow UI publicly
     replicas: 2  # Adjust the number of replicas for scalability
 
+    # Optional: Configure the webserver port (default is 8080)
+    ports:
+      - name: web
+        port: 8080
+        targetPort: 8080
+
   # Configure the Scheduler
   scheduler:
     replicas: 2  # Increase this for fault tolerance and high availability
@@ -85,5 +91,16 @@ airflow:
   # Enable or disable CeleryExecutor for distributed task execution
   celery:
     enabled: false  # Set to true if you want to use CeleryExecutor instead
+
+# Optional: Configure Ingress for Airflow UI (if needed)
+# Uncomment this section if you prefer to use Ingress instead of LoadBalancer
+# webserver:
+#   ingress:
+#     enabled: true
+#     annotations:
+#       nginx.ingress.kubernetes.io/rewrite-target: /
+#     hosts:
+#       - name: airflow.yourdomain.com  # Replace with your domain name
+#         path: /
 
 # You can further customize based on your specific requirements.
