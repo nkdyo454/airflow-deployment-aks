@@ -16,8 +16,6 @@ jobs:
 
     - name: Set up Azure CLI
       uses: Azure/cli@v2.1.0
-      with:
-        inlineScript: latest
 
     - name: Log in to Azure using Service Principal
       run: |
