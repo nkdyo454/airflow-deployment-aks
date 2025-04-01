@@ -1,0 +1,49 @@
+name: Deploy Apache Airflow on AKS
+
+on:
+  push:
+    branches:
+      - main 
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/setup-azurecli@v1
+      with:
+        azure-cli-version: latest
+
+    - name: Log in to Azure using Service Principal
+      run: |
+        az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+
+    - name: Set the Azure subscription
+      run: |
+        az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Install Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+    - name: Set up kubectl to access AKS
+      run: |
+        az aks get-credentials --resource-group ${{ secrets.RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }} --admin
+
+    - name: Add Apache Airflow Helm repository
+      run: |
+        helm repo add apache-airflow https://airflow.apache.org
+        helm repo update
+
+    - name: Deploy Apache Airflow using Helm
+      run: |
+        helm upgrade --install airflow apache-airflow/airflow --namespace airflow --create-namespace -f ./helm-values.yaml
+
+    - name: Verify Airflow pods are running
+      run: |
+        kubectl get pods -n airflow
