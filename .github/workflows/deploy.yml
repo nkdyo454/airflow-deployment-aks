@@ -23,7 +23,7 @@ jobs:
 
     - name: Set the Azure subscription
       run: |
-        az account set --subscription 4f8cfea-f56d-487f-aab8-4143af9a5d6e
+        az account set --subscription 34f8cfea-f56d-487f-aab8-4143af9a5d6e
 
     - name: Install Helm
       run: |
