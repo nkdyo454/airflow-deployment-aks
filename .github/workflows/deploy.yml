@@ -45,3 +45,5 @@ jobs:
     - name: Verify Airflow pods are running
       run: |
         kubectl get pods -n airflow
+        kubectl get svc -n airflow
+
