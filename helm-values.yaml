@@ -1,0 +1,89 @@
+# Customize Apache Airflow installation values
+
+airflow:
+  # Set the Airflow executor type. Options are:
+  # - SequentialExecutor
+  # - LocalExecutor
+  # - CeleryExecutor
+  # - KubernetesExecutor
+  executor: KubernetesExecutor
+
+  # Set the Airflow image tag (e.g., the Airflow version to use)
+  image:
+    repository: apache/airflow
+    tag: "2.5.1"  # Update to the desired version of Airflow
+
+  # Specify whether to use persistent storage for the Airflow database
+  persistence:
+    enabled: true
+    size: 8Gi  # Adjust size as needed for your workload
+
+  # Configure the Airflow database settings (e.g., Postgres or MySQL)
+  database:
+    user: airflow
+    password: airflow
+    host: airflow-db
+    port: 5432
+    db: airflow
+
+  # Set the Airflow UI configuration
+  webserver:
+    service:
+      type: LoadBalancer  # Use LoadBalancer to expose the Airflow UI publicly
+    replicas: 2  # Adjust the number of replicas for scalability
+
+  # Configure the Scheduler
+  scheduler:
+    replicas: 2  # Increase this for fault tolerance and high availability
+
+  # Configure the Workers (for KubernetesExecutor)
+  workers:
+    replicas: 3  # Number of worker pods to run, adjust as needed based on load
+
+  # Set the Airflow webserver and scheduler resources (CPU and memory)
+  resources:
+    webserver:
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "2Gi"
+        cpu: "1000m"
+    scheduler:
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "2Gi"
+        cpu: "1000m"
+    workers:
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "2Gi"
+        cpu: "1000m"
+
+  # Configure Airflow's service account for KubernetesExecutor
+  serviceAccount:
+    create: true
+    name: airflow-service-account  # Optional, provide your own service account name
+
+  # Configure the Airflow scheduler logs
+  logs:
+    scheduler:
+      enabled: true
+      level: DEBUG
+
+  # Optional: Configure the airflow home directory
+  airflowHome: /opt/airflow
+
+  # Optional: Configure the Airflow RBAC settings
+  rbac:
+    create: true
+
+  # Enable or disable CeleryExecutor for distributed task execution
+  celery:
+    enabled: false  # Set to true if you want to use CeleryExecutor instead
+
+# You can further customize based on your specific requirements.
