@@ -1,11 +1,5 @@
-# Customize Apache Airflow installation values
-
 airflow:
-  # Set the Airflow executor type. Options are:
-  # - SequentialExecutor
-  # - LocalExecutor
-  # - CeleryExecutor
-  # - KubernetesExecutor
+  # Airflow executor type (use KubernetesExecutor for Kubernetes)
   executor: KubernetesExecutor
 
   # Set the Airflow image tag (e.g., the Airflow version to use)
@@ -13,12 +7,7 @@ airflow:
     repository: apache/airflow
     tag: "2.5.1"  # Update to the desired version of Airflow
 
-  # Specify whether to use persistent storage for the Airflow database
-  persistence:
-    enabled: true
-    size: 8Gi  # Adjust size as needed for your workload
-
-  # Configure the Airflow database settings (e.g., Postgres or MySQL)
+  # Database settings
   database:
     user: airflow
     password: airflow
@@ -26,27 +15,49 @@ airflow:
     port: 5432
     db: airflow
 
-  # Set the Airflow UI configuration
+  # Webserver configuration (SSO settings)
   webserver:
+    webserverConfig: |
+      import os
+      from flask_appbuilder.security.manager import AUTH_OAUTH
+
+      AUTH_TYPE = AUTH_OAUTH
+      OAUTH_PROVIDERS = [
+          {
+              'name': 'okta', 'icon': 'fa-circle-o',
+              'token_key': 'access_token',
+              'remote_app': {
+                  'client_id': '0oao3wrk7aga2Lj7b5d7',  # Replace with your Okta client ID
+                  'client_secret': 'MY CLIENT SECRET',  # Replace with your Okta client secret
+                  'api_base_url': 'https://dev-70294059-admin.okta.com/oauth2/default/v1/',  # Replace with your Okta domain
+                  'client_kwargs': {
+                      'scope': 'openid profile email groups'
+                  },
+                  'access_token_url': 'https://dev-70294059-admin.okta.com/oauth2/default/v1/token',  # Replace with your Okta domain
+                  'authorize_url': 'https://dev-70294059-admin.okta.com/oauth2/default/v1/authorize',  # Replace with your Okta domain
+              }
+          }
+      ]
+
+    # Configure the service type for the web server
     service:
       type: LoadBalancer  # Use LoadBalancer to expose the Airflow UI publicly
-    replicas: 2  # Adjust the number of replicas for scalability
+    replicas: 2  # Number of webserver replicas
 
-    # Optional: Configure the webserver port (default is 8080)
+    # Webserver port configuration
     ports:
       - name: web
         port: 8080
         targetPort: 8080
 
-  # Configure the Scheduler
+  # Configure the scheduler and worker resources
   scheduler:
-    replicas: 2  # Increase this for fault tolerance and high availability
+    replicas: 2  # Number of scheduler replicas
 
-  # Configure the Workers (for KubernetesExecutor)
   workers:
-    replicas: 3  # Number of worker pods to run, adjust as needed based on load
+    replicas: 3  # Number of worker pods
 
-  # Set the Airflow webserver and scheduler resources (CPU and memory)
+  # Resources configuration for webserver, scheduler, and workers
   resources:
     webserver:
       requests:
@@ -70,37 +81,11 @@ airflow:
         memory: "2Gi"
         cpu: "1000m"
 
-  # Configure Airflow's service account for KubernetesExecutor
-  serviceAccount:
-    create: true
-    name: airflow-service-account  # Optional, provide your own service account name
-
-  # Configure the Airflow scheduler logs
-  logs:
-    scheduler:
-      enabled: true
-      level: DEBUG
-
   # Optional: Configure the airflow home directory
   airflowHome: /opt/airflow
 
-  # Optional: Configure the Airflow RBAC settings
+  # Enable RBAC for Airflow UI
   rbac:
     create: true
-
-  # Enable or disable CeleryExecutor for distributed task execution
-  celery:
-    enabled: false  # Set to true if you want to use CeleryExecutor instead
-
-# Optional: Configure Ingress for Airflow UI (if needed)
-# Uncomment this section if you prefer to use Ingress instead of LoadBalancer
-# webserver:
-#   ingress:
-#     enabled: true
-#     annotations:
-#       nginx.ingress.kubernetes.io/rewrite-target: /
-#     hosts:
-#       - name: airflow.yourdomain.com  # Replace with your domain name
-#         path: /
-
-# You can further customize based on your specific requirements.
+  
+  # Other configurations...
