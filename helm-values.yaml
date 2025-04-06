@@ -29,12 +29,12 @@ airflow:
               'remote_app': {
                   'client_id': '0oao3wrk7aga2Lj7b5d7',  # Replace with your Okta client ID
                   'client_secret': 'MY CLIENT SECRET',  # Replace with your Okta client secret
-                  'api_base_url': 'https://dev-70294059-admin.okta.com/oauth2/default/v1/',  # Replace with your Okta domain
+                  'api_base_url': 'https://dev-70294059.okta.com/oauth2/default/v1/',  # Replace with your Okta domain
                   'client_kwargs': {
                       'scope': 'openid profile email groups'
                   },
-                  'access_token_url': 'https://dev-70294059-admin.okta.com/oauth2/default/v1/token',  # Replace with your Okta domain
-                  'authorize_url': 'https://dev-70294059-admin.okta.com/oauth2/default/v1/authorize',  # Replace with your Okta domain
+                  'access_token_url': 'https://dev-70294059.okta.com/oauth2/default/v1/token',  # Replace with your Okta domain
+                  'authorize_url': 'https://dev-70294059.okta.com/oauth2/default/v1/authorize',  # Replace with your Okta domain
               }
           }
       ]
