@@ -44,8 +44,10 @@ jobs:
 
     - name: Deploy Apache Airflow using Helm
       run: |
-         
-        helm upgrade --install airflow apache-airflow/airflow --namespace airflow --create-namespace -f ./helm-values.yaml
+      helm status airflow --namespace airflow
+      helm history airflow --namespace airflow
+
+      helm upgrade --install airflow apache-airflow/airflow --namespace airflow --create-namespace -f ./helm-values.yaml --force
 
     - name: Verify Airflow pods are running
       run: |
