@@ -5,6 +5,7 @@ on:
     branches:
       - main 
 
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,7 +15,9 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up Azure CLI
-      uses: pietrobolcato/install-azure-cli-action@v1.0.1
+      uses: azure/setup-azurecli@v1
+      with:
+        azure-cli-version: latest
 
     - name: Log in to Azure using Service Principal
       run: |
@@ -22,7 +25,7 @@ jobs:
 
     - name: Set the Azure subscription
       run: |
-        az account set --subscription 34f8cfea-f56d-487f-aab8-4143af9a5d6e
+        az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Install Helm
       run: |
@@ -36,14 +39,16 @@ jobs:
       run: |
         helm repo add apache-airflow https://airflow.apache.org
         helm repo update
+        pip install Flask flask-appbuilder Flask-OAuthlib oauthlib
+
 
     - name: Deploy Apache Airflow using Helm
       run: |
-        helm upgrade --install airflow apache-airflow/airflow --namespace airflow --create-namespace -f ./helm-values.yaml
+        helm status airflow --namespace airflow
+        helm history airflow --namespace airflow
+
+        helm upgrade --install airflow apache-airflow/airflow --namespace airflow --create-namespace -f ./helm-values.yaml --force
 
     - name: Verify Airflow pods are running
       run: |
         kubectl get pods -n airflow
-        kubectl get svc airflow-webserver
-        kubectl port-forward svc/airflow-webserver 8080:8080 -n airflow
-
