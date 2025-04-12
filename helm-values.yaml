@@ -56,16 +56,12 @@ webserver:
         }
     ]
 
+  # Number of webserver replicas
+  replicas: 2
+
   service:
     # Configure the service type for the web server
     type: LoadBalancer
-
-  replicas: 2  # Number of webserver replicas
-
-  ports:
-    - name: web
-      port: 8080
-      targetPort: 8080
 
 scheduler:
   replicas: 2  # Number of scheduler replicas
