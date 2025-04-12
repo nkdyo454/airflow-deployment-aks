@@ -17,7 +17,7 @@ airflow:
 
   # Webserver configuration (SSO settings)
 webserver:
-    webserverConfig: |
+  webserverConfig: |
       import os
       from flask_appbuilder.security.manager import AUTH_OAUTH
       AUTH_TYPE = AUTH_OAUTH
@@ -57,31 +57,31 @@ webserver:
       - name: web
         port: 8080
         targetPort: 8080
-
+        
   # Configure the scheduler and worker resources
-  scheduler:
-    replicas: 2  # Number of scheduler replicas
+scheduler:
+  replicas: 2  # Number of scheduler replicas
 
-  workers:
-    replicas: 3  # Number of worker pods
+workers:
+  replicas: 3  # Number of worker pods
 
   # Resources configuration for webserver, scheduler, and workers
-  resources:
-    webserver:
+resources:
+  webserver:
       requests:
         memory: "1Gi"
         cpu: "500m"
       limits:
         memory: "2Gi"
         cpu: "1000m"
-    scheduler:
+  scheduler:
       requests:
         memory: "1Gi"
         cpu: "500m"
       limits:
         memory: "2Gi"
         cpu: "1000m"
-    workers:
+   workers:
       requests:
         memory: "1Gi"
         cpu: "500m"
@@ -89,11 +89,11 @@ webserver:
         memory: "2Gi"
         cpu: "1000m"
 
-  # Optional: Configure the airflow home directory
-  airflowHome: /opt/airflow
+  # Optional: Configure the airflow home director
+airflowHome: /opt/airflow
 
   # Enable RBAC for Airflow UI
-  rbac:
+rbac:
     create: true
   
   # Other configurations...
