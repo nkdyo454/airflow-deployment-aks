@@ -45,9 +45,7 @@ jobs:
         helm status airflow --namespace airflow
         helm history airflow --namespace airflow
 
-        kubectl delete configmap airflow-webserver-config -n airflow
 
-        kubectl create configmap airflow-webserver-config --from-file=webserver_config.py=webserver_config.py -n airflow
         helm upgrade --install airflow apache-airflow/airflow --namespace airflow --create-namespace -f ./helm-values.yaml --force
 
     - name: Verify Airflow pods are running
