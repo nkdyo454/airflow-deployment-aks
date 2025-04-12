@@ -20,8 +20,10 @@ airflow:
     webserverConfig: |
       import os
       from flask_appbuilder.security.manager import AUTH_OAUTH
-
       AUTH_TYPE = AUTH_OAUTH
+      AUTH_ROLES_SYNC_AT_LOGIN = True
+      AUTH_USER_REGISTRATION = True
+      AUTH_USER_REGISTRATION_ROLE = "Admin"
       OAUTH_PROVIDERS = [
           {
               'name': 'okta', 'icon': 'fa-circle-o',
@@ -34,7 +36,9 @@ airflow:
                       'scope': 'openid profile email groups'
                   },
                   'access_token_url': 'https://dev-70294059.okta.com/oauth2/default/v1/token',  # Replace with your Okta domain
-                  'authorize_url': 'https://dev-70294059.okta.com/oauth2/default/v1/authorize',  # Replace with your Okta domain
+                  'authorize_url': 'https://dev-70294059.okta.com/oauth2/default/v1/authorize',# Replace with your Okta domain
+                  'jwks_uri': "https://myoktadomain.okta.com/oauth2/v1/keys"
+
               }
           }
       ]
