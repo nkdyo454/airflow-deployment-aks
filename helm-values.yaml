@@ -81,7 +81,7 @@ resources:
       limits:
         memory: "2Gi"
         cpu: "1000m"
-   workers:
+  workers:
       requests:
         memory: "1Gi"
         cpu: "500m"
@@ -94,6 +94,6 @@ airflowHome: /opt/airflow
 
   # Enable RBAC for Airflow UI
 rbac:
-    create: true
+   create: true
   
   # Other configurations...
