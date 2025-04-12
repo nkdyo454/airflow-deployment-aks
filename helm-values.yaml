@@ -48,15 +48,15 @@ webserver:
       ]
 
     # Configure the service type for the web server
-    service:
-      type: LoadBalancer  # Use LoadBalancer to expose the Airflow UI publicly
-    replicas: 2  # Number of webserver replicas
+service:
+  type: LoadBalancer  # Use LoadBalancer to expose the Airflow UI publicly
+replicas: 2  # Number of webserver replicas
 
     # Webserver port configuration
-    ports:
-      - name: web
-        port: 8080
-        targetPort: 8080
+ports:
+  - name: web
+    port: 8080
+    targetPort: 8080
         
   # Configure the scheduler and worker resources
 scheduler:
