@@ -16,7 +16,7 @@ airflow:
     db: airflow
 
   # Webserver configuration (SSO settings)
-  config:
+webserver:
     webserverConfig: |
       import os
       from flask_appbuilder.security.manager import AUTH_OAUTH
@@ -24,6 +24,10 @@ airflow:
       AUTH_ROLES_SYNC_AT_LOGIN = True
       AUTH_USER_REGISTRATION = True
       AUTH_USER_REGISTRATION_ROLE = "Admin"
+      AUTH_ROLES_MAPPING = {
+          "Platform_viewer": ["Viewer"],
+          "Platform": ["Admin"]
+        }
       OAUTH_PROVIDERS = [
           {
               'name': 'okta', 'icon': 'fa-circle-o',
