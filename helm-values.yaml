@@ -16,7 +16,7 @@ airflow:
     db: airflow
 
   # Webserver configuration (SSO settings)
-  webserver:
+  config:
     webserverConfig: |
       import os
       from flask_appbuilder.security.manager import AUTH_OAUTH
