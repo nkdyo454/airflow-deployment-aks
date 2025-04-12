@@ -21,17 +21,19 @@ airflow:
   # Enable RBAC for Airflow UI
   rbac:
     create: true
-
+    
 webserver:
-  # Webserver configuration (SSO settings)
+  configMountPath: /opt/airflow/webserver_config.py
   webserverConfig: |
     import os
     from flask_appbuilder.security.manager import AUTH_OAUTH
 
     AUTH_TYPE = AUTH_OAUTH
-    AUTH_ROLES_SYNC_AT_LOGIN = True
     AUTH_USER_REGISTRATION = True
     AUTH_USER_REGISTRATION_ROLE = "Admin"
+    AUTH_ROLES_SYNC_AT_LOGIN = True
+    AUTH_BACKENDS = ['airflow.www.security.SecureOAUTHUserInfoBackend']
+
     AUTH_ROLES_MAPPING = {
         "Platform_viewer": ["Viewer"],
         "Platform": ["Admin"]
@@ -43,15 +45,15 @@ webserver:
             'icon': 'fa-circle-o',
             'token_key': 'access_token',
             'remote_app': {
-                'client_id': '0oao3wrk7aga2Lj7b5d7',  # Replace with your Okta client ID
-                'client_secret': 'MY CLIENT SECRET',  # Replace with your Okta client secret
-                'api_base_url': 'https://dev-70294059.okta.com/oauth2/default/v1/',  # Replace with your Okta domain
+                'client_id': '0oao3wrk7aga2Lj7b5d7',
+                'client_secret': 'MY CLIENT SECRET',
+                'api_base_url': 'https://dev-70294059.okta.com/oauth2/default/v1/',
                 'client_kwargs': {
                     'scope': 'openid profile email groups'
                 },
                 'access_token_url': 'https://dev-70294059.okta.com/oauth2/default/v1/token',
                 'authorize_url': 'https://dev-70294059.okta.com/oauth2/default/v1/authorize',
-                'jwks_uri': 'https://myoktadomain.okta.com/oauth2/v1/keys'
+                'jwks_uri': 'https://dev-70294059.okta.com/oauth2/v1/keys'
             }
         }
     ]
