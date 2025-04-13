@@ -39,24 +39,24 @@ webserver:
         "Platform": ["Admin"]
     }
 
-    OAUTH_PROVIDERS = [
-        {
-            'name': 'okta',
-            'icon': 'fa-circle-o',
-            'token_key': 'access_token',
-            'remote_app': {
-                'client_id': '0oao3wrk7aga2Lj7b5d7',
-                'client_secret': '5MpP2ReCfHZDMjEqK0lyGh4UzdkuaSbLaU8zbAweKCRrlpjFRlBTHrjyFVfPTZnc',
-                'api_base_url': 'https://dev-70294059.okta.com/oauth2/default/v1/',
-                'client_kwargs': {
-                    'scope': 'openid profile email groups'
-                },
-                'access_token_url': 'https://dev-70294059.okta.com/oauth2/default/v1/token',
-                'authorize_url': 'https://dev-70294059.okta.com/oauth2/default/v1/authorize',
-                'jwks_uri': 'https://dev-70294059.okta.com/oauth2/default/v1/keys'
-}
-}
-    ]
+#     OAUTH_PROVIDERS = [
+#         {
+#             'name': 'okta',
+#             'icon': 'fa-circle-o',
+#             'token_key': 'access_token',
+#             'remote_app': {
+#                 'client_id': '0oao3wrk7aga2Lj7b5d7',
+#                 'client_secret': '5MpP2ReCfHZDMjEqK0lyGh4UzdkuaSbLaU8zbAweKCRrlpjFRlBTHrjyFVfPTZnc',
+#                 'api_base_url': 'https://dev-70294059.okta.com/oauth2/default/v1/',
+#                 'client_kwargs': {
+#                     'scope': 'openid profile email groups'
+#                 },
+#                 'access_token_url': 'https://dev-70294059.okta.com/oauth2/default/v1/token',
+#                 'authorize_url': 'https://dev-70294059.okta.com/oauth2/default/v1/authorize',
+#                 'jwks_uri': 'https://dev-70294059.okta.com/oauth2/default/v1/keys'
+# }
+# }
+#     ]
 
   # Number of webserver replicas
   replicas: 2
