@@ -53,8 +53,8 @@ webserver:
                 },
                 'access_token_url': 'https://dev-70294059.okta.com/oauth2/default/v1/token',
                 'authorize_url': 'https://dev-70294059.okta.com/oauth2/default/v1/authorize',
-                'jwks_uri': 'https://dev-70294059.okta.com/oauth2/v1/keys'
-            }
+                'jwks_uri': 'https://dev-70294059.okta.com/oauth2/default/v1/keys'
+}
         }
     ]
 
