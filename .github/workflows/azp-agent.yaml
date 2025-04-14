@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azp-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: azp-agent
+  template:
+    metadata:
+      labels:
+        app: azp-agent
+    spec:
+      containers:
+        - name: azp-agent
+          image: acraksregistry.azurecr.io/azp-agent:linux
+          env:
+            - name: AZP_URL
+              value: https://dev.azure.com/nkdyo454
+            - name: AZP_POOL
+              value: azure-aks
+            - name: TARGETARCH
+              value: linux-x64
+          resources:
+            requests:
+              memory: 2Gi
+              cpu: "1"
