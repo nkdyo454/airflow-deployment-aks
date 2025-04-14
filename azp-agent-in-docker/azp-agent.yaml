@@ -11,8 +11,7 @@ spec:
     metadata:
       labels:
         app: azp-agent
-      annotations:
-        azure.workload.identity/inject-proxy-sidecar: "true"
+        azure.workload.identity/use: "true"
     spec:
       serviceAccountName: azure-devops-agent
       containers:
