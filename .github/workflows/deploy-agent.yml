@@ -60,3 +60,4 @@ jobs:
               AZP_POOL=${{ env.AZP_POOL }} \
               TARGETARCH=linux-x64 \
             --cpu 1 --memory 2
+            
