@@ -53,3 +53,4 @@ jobs:
     - name: Deploy Azure DevOps Agent to AKS
       run: |
         kubectl apply -f  azp-agent-in-docker/azp-agent.yaml
+        kubectl get pods -n default
