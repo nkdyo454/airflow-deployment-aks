@@ -11,7 +11,7 @@ env:
   AZURE_CONTAINER_IMAGE: azp-agent:linux
   AZURE_CONTAINER_NAME: azp-agent-linux
   AZP_URL: https://dev.azure.com/nkdyo454
-  AZP_POOL: Default
+  AZP_POOL: azure-aks
 
 
 jobs:
