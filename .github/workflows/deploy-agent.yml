@@ -1,0 +1,62 @@
+name: Deploy Apache Airflow on AKS
+
+on:
+  push:
+    branches:
+      - main 
+env:
+  AZURE_RESOURCE_GROUP: airflow-deploy-aks
+  AZURE_ACR_NAME: acraksregistry
+  AZURE_CONTAINER_REGISTRY: acraksregistry.azurecr.io
+  AZURE_CONTAINER_IMAGE: azp-agent:linux
+  AZURE_CONTAINER_NAME: azp-agent-linux
+  AZP_URL: https://dev.azure.com/nkdyo454
+  AZP_POOL: Default
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: pietrobolcato/install-azure-cli-action@v1.0.1
+
+    - name: Log in to Azure using Service Principal
+      run: |
+        az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+
+    - name: Set the Azure subscription
+      run: |
+        az account set --subscription 34f8cfea-f56d-487f-aab8-4143af9a5d6e
+
+ 
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.AZURE_CONTAINER_IMAGE }} \
+          -f azp-agent-in-docker/azp-agent-linux.dockerfile azp-agent-in-docker
+          
+    - name: Login to ACR
+      run: |
+          az acr login --name ${{ env.AZURE_ACR_NAME }}
+
+    - name: Push image to ACR
+      run: |
+          docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.AZURE_CONTAINER_IMAGE }}
+
+    - name: Deploy to ACI
+      run: |
+          az container create \
+            --name ${{ env.AZURE_CONTAINER_NAME }} \
+            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+            --image ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.AZURE_CONTAINER_IMAGE }} \
+            --registry-login-server ${{ env.AZURE_CONTAINER_REGISTRY }} \
+            --assign-identity \
+            --environment-variables \
+              AZP_URL=${{ env.AZP_URL }} \
+              AZP_POOL=${{ env.AZP_POOL }} \
+              TARGETARCH=linux-x64 \
+            --cpu 1 --memory 2
