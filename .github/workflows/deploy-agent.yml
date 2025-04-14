@@ -54,7 +54,7 @@ jobs:
             --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
             --image ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.AZURE_CONTAINER_IMAGE }} \
             --registry-login-server ${{ env.AZURE_CONTAINER_REGISTRY }} \
-            --assign-identity \
+            --assign-identity /subscriptions/34f8cfea-f56d-487f-aab8-4143af9a5d6e/resourceGroups/airflow-deploy-aks/providers/Microsoft.ManagedIdentity/userAssignedIdentities/azaksmi \
             --environment-variables \
               AZP_URL=${{ env.AZP_URL }} \
               AZP_POOL=${{ env.AZP_POOL }} \
