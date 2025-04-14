@@ -25,7 +25,3 @@ spec:
               value: azure-aks
             - name: TARGETARCH
               value: linux-x64
-          resources:
-            requests:
-              cpu: "1"
-              memory: "2Gi"
