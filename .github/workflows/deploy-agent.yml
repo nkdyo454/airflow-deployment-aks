@@ -47,5 +47,10 @@ jobs:
       run: |
           docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.AZURE_CONTAINER_IMAGE }}
 
+    - name: Set up AKS credentials
+      run: az aks get-credentials --name airflow-cluster2 --resource-group airflow-deploy-aks
+
     - name: Deploy Azure DevOps Agent to AKS
-      run: kubectl apply -f ./azp-agent-in-docker/azp-agent.yaml
+      run: |
+          kubectl apply -f ./azp-agent.yaml 
+      
