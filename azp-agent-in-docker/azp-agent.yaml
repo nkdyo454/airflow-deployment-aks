@@ -11,18 +11,21 @@ spec:
     metadata:
       labels:
         app: azp-agent
+      annotations:
+        azure.workload.identity/inject-proxy-sidecar: "true"
     spec:
+      serviceAccountName: azure-devops-agent
       containers:
-      - name: azp-agent
-        image: acraksregistry.azurecr.io/azp-agent:linux
-        env:
-        - name: AZP_URL
-          value: "https://dev.azure.com/nkdyo454"
-        - name: AZP_POOL
-          value: "azure-aks"
-        - name: TARGETARCH
-          value: "linux-x64"
-        resources:
-          requests:
-            memory: "2Gi"
-            cpu: "1"
+        - name: azp-agent
+          image: acraksregistry.azurecr.io/azp-agent:linux
+          env:
+            - name: AZP_URL
+              value: https://dev.azure.com/nkdyo454
+            - name: AZP_POOL
+              value: azure-aks
+            - name: TARGETARCH
+              value: linux-x64
+          resources:
+            requests:
+              cpu: "1"
+              memory: "2Gi"
