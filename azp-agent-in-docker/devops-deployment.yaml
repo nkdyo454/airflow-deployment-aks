@@ -27,17 +27,3 @@ spec:
         - sleep
         args:
         - 99d
-        resources:
-          requests:
-            cpu: "500m"
-            memory: "1Gi"
-          limits:
-            cpu: "2000m"
-            memory: "2Gi"
-        volumeMounts:
-          - mountPath: "/home/devops"
-            name: runner-data
-      volumes:
-        - name: runner-data
-          persistentVolumeClaim:
-            claimName: devops-pvc
