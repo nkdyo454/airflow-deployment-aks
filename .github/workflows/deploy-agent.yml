@@ -36,8 +36,9 @@ jobs:
  
     - name: Build Docker image
       run: |
-        docker build -t ${{ env.AZURE_CONTAINER_REGISTRY }}/devops-runner:v1.0.0 \
-          -f azp-agent-in-docker/Dockerfile devops-runner
+        docker build -t devops-runner:v1.0.0 -f azp-agent-in-docker/Dockerfile .
+        docker tag devops-runner:v1.0.0 acraksregistry.azurecr.io/devops-runner:v1.0.0
+
           
     - name: Login to ACR
       run: |
@@ -45,8 +46,8 @@ jobs:
 
     - name: Push image to ACR
       run: |
-          docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/devops-runner:v1.0.0
-
+        docker push acraksregistry.azurecr.io/devops-runner:v1.0.0
+        
     # - name: Set up AKS credentials
     #   run: az aks get-credentials --name airflow-cluster2 --resource-group airflow-deploy-aks
 
