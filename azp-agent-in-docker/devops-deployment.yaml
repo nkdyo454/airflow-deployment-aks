@@ -27,3 +27,10 @@ spec:
         - sleep
         args:
         - 99d
+      volumeMounts:
+          - mountPath: "/home/devops"
+            name: runner-data
+      volumes:
+        - name: runner-data
+          persistentVolumeClaim:
+            claimName: devops-pvc
