@@ -54,7 +54,7 @@ jobs:
 
     - name: Deploy Azure DevOps Agent to AKS
       run: |
-        kubectl apply -f devops-deployment.yaml
+        kubectl apply -f azp-agent-in-docker/devops-deployment.yaml
 
     # - name: Set up AKS credentials
     #   run:  az acr build -f azp-agent-in-docker/Dockerfile -t devops-runner:v1.0.0 -r acraksregistry -g airflow-deploy-aks .
