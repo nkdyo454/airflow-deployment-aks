@@ -19,7 +19,7 @@ spec:
       serviceAccountName: ado-agent-sa
       containers:
         - name: ado-agent-fi
-          image: acraksregistry.azurecr.io/ado-agent:latest  # ✅ Use your pushed image here
+          image: acraksregistry.azurecr.io/ado-agent:latest
           imagePullPolicy: Always
           env:
             - name: AZP_URL
@@ -29,9 +29,11 @@ spec:
             - name: AZP_AGENT_NAME
               value: agent-mi-auto
             - name: AZURE_CLIENT_ID
-              value: 72680213-f085-427d-9c8c-a01b5387f8ad  # 👈 From your managed identity
+              value: 72680213-f085-427d-9c8c-a01b5387f8ad
             - name: AZURE_TENANT_ID
               value: 871621f4-3a19-401e-a9f8-4e1241121767
+            - name: AZURE_FEDERATED_TOKEN_FILE
+              value: /var/run/secrets/azure/tokens/federated-token  # ✅ added this
           volumeMounts:
             - name: federated-token
               mountPath: /var/run/secrets/azure/tokens
