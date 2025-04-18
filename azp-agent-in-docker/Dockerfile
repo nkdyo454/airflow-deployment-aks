@@ -1,14 +1,20 @@
 FROM ubuntu:22.04
-USER root
-RUN apt-get -y update && apt-get install -y curl && \
-    curl -sL https://aka.ms/InstallAzureCLIDeb | bash && az aks install-cli && \
-    curl -fsSL https://get.docker.com -o get-docker.sh && sh ./get-docker.sh && \
-    mkdir devops-runner && cd devops-runner && \
-    curl -o vsts-agent-linux-x64-3.217.1.tar.gz -L https://vstsagentpackage.azureedge.net/agent/3.217.1/vsts-agent-linux-x64-3.217.1.tar.gz && \
-    tar xzf ./vsts-agent-linux-x64-3.217.1.tar.gz && \
-    apt-get clean
 
-RUN addgroup --gid 110 devops && adduser devops --uid 111 --system && adduser devops devops && \
-  chown -R devops:devops devops-runner
+RUN apt update && apt upgrade -y && \
+    apt install -y ca-certificates curl apt-transport-https lsb-release gnupg jq libicu-dev git && \
+    curl -sL https://aka.ms/InstallAzureCLIDeb | bash && \
+    rm -rf /var/lib/apt/lists/*
 
-USER devops
+RUN useradd -m agent
+
+# Also can be "linux-arm", "linux-arm64".
+ENV TARGETARCH="linux-x64"
+
+WORKDIR /azp
+COPY ./start.sh /azp/
+RUN chmod +x /azp/start.sh && \
+    chown -R agent:agent /azp && \
+    chmod 755 /azp
+USER agent
+
+ENTRYPOINT [ "./start.sh" ]
