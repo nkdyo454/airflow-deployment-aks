@@ -12,6 +12,10 @@ env:
   AZURE_CONTAINER_NAME: azp-agent-linux
   AZP_URL: https://dev.azure.com/nkdyo454
   AZP_POOL: azure-aks
+  ACR_NAME: acraksregistry
+  IMAGE_NAME: ado-agent
+  IMAGE_TAG: latest
+
 
 
 jobs:
@@ -47,7 +51,15 @@ jobs:
     # - name: Push image to ACR
     #   run: |
     #     docker push acraksregistry.azurecr.io/devops-runner:v1.0.0
-        
+
+    - name: Build Docker image
+      run: |
+          docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG .
+
+    - name: Push Docker image to ACR
+      run: |
+          docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG
+
     - name: Set up AKS credentials
       run: az aks get-credentials --name airflow-cluster2 --resource-group airflow-deploy-aks
 
