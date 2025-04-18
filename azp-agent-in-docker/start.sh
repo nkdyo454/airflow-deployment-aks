@@ -2,7 +2,7 @@
 set -e
 
 # Default federated token file path if not provided
-AZURE_FEDERATED_TOKEN_FILE=${AZURE_FEDERATED_TOKEN_FILE:-/var/run/secrets/azure/tokens/azure-identity-token}
+AZURE_FEDERATED_TOKEN_FILE=${AZURE_FEDERATED_TOKEN_FILE:-/var/run/secrets/azure/tokens/federated-token}
 
 if [ -z "${AZP_URL}" ]; then
   echo 1>&2 "error: missing AZP_URL environment variable"
