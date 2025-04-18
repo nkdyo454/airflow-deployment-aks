@@ -54,10 +54,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-          docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG .
-
-    - name: Push Docker image to ACR
-      run: |
+          docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG -f azp-agent-in-docker/Dockerfile.
           docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG
 
     - name: Set up AKS credentials
