@@ -33,7 +33,7 @@ spec:
             - name: AZURE_TENANT_ID
               value: 871621f4-3a19-401e-a9f8-4e1241121767
             - name: AZURE_FEDERATED_TOKEN_FILE
-              value: /var/run/secrets/azure/tokens/federated-token  # ✅ added this
+              value: /var/run/secrets/azure/tokens/federated-token
           volumeMounts:
             - name: federated-token
               mountPath: /var/run/secrets/azure/tokens
@@ -46,4 +46,3 @@ spec:
                   path: federated-token
                   expirationSeconds: 3600
                   audience: api://AzureADTokenExchange
-      restartPolicy: Always
