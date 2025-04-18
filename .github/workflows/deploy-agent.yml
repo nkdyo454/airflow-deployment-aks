@@ -52,6 +52,7 @@ jobs:
 
     - name: Build Docker image
       run: |
+          az acr login --name acraksregistry
           docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG -f azp-agent-in-docker/Dockerfile .
           docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG
 
