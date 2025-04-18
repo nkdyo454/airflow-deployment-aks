@@ -11,7 +11,7 @@ RUN useradd -m agent
 ENV TARGETARCH="linux-x64"
 
 WORKDIR /azp
-COPY ./start.sh /azp/
+COPY azp-agent-in-docker/start.sh /azp/
 RUN chmod +x /azp/start.sh && \
     chown -R agent:agent /azp && \
     chmod 755 /azp
