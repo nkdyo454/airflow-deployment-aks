@@ -6,6 +6,8 @@ on:
       - main 
     paths:
       - .github/workflows/deploy.yml
+      - helm-values.yaml
+      - webserver_config.py
 jobs:
   deploy:
     runs-on: ubuntu-latest
