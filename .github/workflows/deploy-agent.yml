@@ -1,10 +1,10 @@
 name: Deploy Apache Airflow on AKS
 
 on:
-  push:
-    paths:
-      - .github/workflows/deploy.yml
-      - azp-agent-in-docker/*
+  # push:
+  #   paths:
+  #     - .github/workflows/deploy.yml
+  #     - azp-agent-in-docker/*
 env:
   AZURE_RESOURCE_GROUP: airflow-deploy-aks
   AZURE_ACR_NAME: acraksregistry
