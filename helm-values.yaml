@@ -24,20 +24,20 @@ airflow:
 
 webserver:
   # Webserver configuration (SSO settings)
-  webserverConfig: |
-    import os
-    from flask_appbuilder.security.manager import AUTH_OAUTH
+  # webserverConfig: |
+  #   import os
+  #   from flask_appbuilder.security.manager import AUTH_OAUTH
 
-    AUTH_TYPE = AUTH_OAUTH
-    AUTH_USER_REGISTRATION = True
-    AUTH_USER_REGISTRATION_ROLE = "Admin"
-    AUTH_ROLES_SYNC_AT_LOGIN = True
-    AUTH_BACKENDS = ['airflow.www.security.SecureOAUTHUserInfoBackend']
+  #   AUTH_TYPE = AUTH_OAUTH
+  #   AUTH_USER_REGISTRATION = True
+  #   AUTH_USER_REGISTRATION_ROLE = "Admin"
+  #   AUTH_ROLES_SYNC_AT_LOGIN = True
+  #   AUTH_BACKENDS = ['airflow.www.security.SecureOAUTHUserInfoBackend']
 
-    AUTH_ROLES_MAPPING = {
-        "Platform_viewer": ["Viewer"],
-        "Platform": ["Admin"]
-    }
+  #   AUTH_ROLES_MAPPING = {
+  #       "Platform_viewer": ["Viewer"],
+  #       "Platform": ["Admin"]
+  #   }
 
 #     OAUTH_PROVIDERS = [
 #         {
