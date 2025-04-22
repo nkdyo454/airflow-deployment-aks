@@ -47,7 +47,7 @@ jobs:
       run: |
        helm status airflow --namespace airflow || true
        helm history airflow --namespace airflow || true
-       helm uninstall airflow --namespace airflow
+       # helm uninstall airflow --namespace airflow
        
        helm upgrade --install airflow apache-airflow/airflow \
        --namespace airflow \
