@@ -24,7 +24,31 @@ airflow:
 
 webserver:
   # Webserver configuration (SSO settings)
-  # webserverConfig: |
+  webserverConfig: |
+from flask_appbuilder.security.manager import AUTH_OAUTH
+AUTH_TYPE = AUTH_OAUTH
+AUTH_ROLE_PUBLIC = 'Public'
+AUTH_USER_REGISTRATION = True
+AUTH_USER_REGISTRATION_ROLE = "Viewer"  # default role
+
+OAUTH_PROVIDERS = [
+    {
+        'name': 'okta',
+        'icon': 'fa-circle-o',
+        'token_key': 'access_token',
+        'remote_app': {
+            'client_id': '0oaoelqqkzF52HT2J5d7',
+            'client_secret': 'MS5tiT2t6tlguCc1jOOEGYtzJIGvQ697Dh615ZPjJMScSTcjkXRfvAFW5-fWgazx',
+            'api_base_url': 'https://dev-70294059.okta.com',
+            'access_token_url': 'https://dev-70294059.okta.com/oauth2/default/v1/token',
+            'authorize_url': 'https://dev-70294059.okta.com/oauth2/default/v1/authorize',
+            'client_kwargs': {
+                'scope': 'openid profile email',
+            },
+            'userinfo_endpoint': 'https://dev-70294059.okta.com/oauth2/default/v1/userinfo',
+        }
+    }
+]
   #   import os
   #   from flask_appbuilder.security.manager import AUTH_OAUTH
 
@@ -57,6 +81,7 @@ webserver:
 # }
 # }
 #     ]
+
 
   # Number of webserver replicas
   replicas: 2
