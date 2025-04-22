@@ -38,6 +38,7 @@ jobs:
       run: |
         helm repo add apache-airflow https://airflow.apache.org
         helm repo update
+        
         pip install Flask flask-appbuilder Flask-OAuthlib oauthlib
 
 
