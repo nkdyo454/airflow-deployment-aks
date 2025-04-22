@@ -1,5 +1,4 @@
 name: Deploy Apache Airflow on AKS
-
 on:
   push:
     branches:
