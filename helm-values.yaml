@@ -29,6 +29,11 @@ webserver:
     AUTH_ROLE_PUBLIC = 'Public'
     AUTH_USER_REGISTRATION = True
     AUTH_USER_REGISTRATION_ROLE = "Viewer"  # default role
+    AUTH_ROLES_MAPPING = {
+    "SVC_DataCOE_Analyst": ["Admin"]
+      }
+    AUTH_ROLES_SYNC_AT_LOGIN = True
+    PERMANENT_SESSION_LIFETIME = 1800
 
     OAUTH_PROVIDERS = [
         {
