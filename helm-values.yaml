@@ -72,7 +72,7 @@ webserver:
             'remote_app': {
                 'client_id': '0oaoelqqkzF52HT2J5d7',
                 'client_secret': 'MS5tiT2t6tlguCc1jOOEGYtzJIGvQ697Dh615ZPjJMScSTcjkXRfvAFW5-fWgazx',
-                'jwks_uri': 'https://dev-70294059.okta.com/oauth2/default/v1/keys'
+                'jwks_uri': 'https://dev-70294059.okta.com/oauth2/default/v1/keys',
                 'api_base_url': 'https://dev-70294059.okta.com',
                 'access_token_url': 'https://dev-70294059.okta.com/oauth2/default/v1/token',
                 'authorize_url': 'https://dev-70294059.okta.com/oauth2/default/v1/authorize',
