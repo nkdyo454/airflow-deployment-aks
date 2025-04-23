@@ -47,7 +47,7 @@ webserver:
                 'access_token_url': 'https://dev-70294059.okta.com/oauth2/default/v1/token',
                 'authorize_url': 'https://dev-70294059.okta.com/oauth2/default/v1/authorize',
                 'client_kwargs': {
-                    'scope': 'openid profile email',
+                    'scope': 'openid profile email groups',
                 },
                 'userinfo_endpoint': 'https://dev-70294059.okta.com/oauth2/default/v1/userinfo',
             }
