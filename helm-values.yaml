@@ -17,7 +17,6 @@ airflow:
   rbac:
     create: true
 
-webserver:
   extraEnv:
     - name: OKTA_CLIENT_ID
       valueFrom:
@@ -30,6 +29,7 @@ webserver:
           name: azure-sp-secret
           key: client-secret
 
+webserver:
   webserverConfig: |
     from flask_appbuilder.security.manager import AUTH_OAUTH
     from airflow.www.security import AirflowSecurityManager
