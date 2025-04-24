@@ -18,10 +18,23 @@ airflow:
     create: true
 
 webserver:
+  extraEnv:
+    - name: OKTA_CLIENT_ID
+      valueFrom:
+        secretKeyRef:
+          name: azure-sp-secret
+          key: client-id
+    - name: OKTA_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: azure-sp-secret
+          key: client-secret
+
   webserverConfig: |
     from flask_appbuilder.security.manager import AUTH_OAUTH
     from airflow.www.security import AirflowSecurityManager
     import requests
+    import os
     import logging
 
     log = logging.getLogger(__name__)
@@ -70,8 +83,8 @@ webserver:
             'icon': 'fa-circle-o',
             'token_key': 'access_token',
             'remote_app': {
-                'client_id': '0oaoelqqkzF52HT2J5d7',
-                'client_secret': 'MS5tiT2t6tlguCc1jOOEGYtzJIGvQ697Dh615ZPjJMScSTcjkXRfvAFW5-fWgazx',
+                'client_id': os.environ.get('OKTA_CLIENT_ID'),
+                'client_secret': os.environ.get('OKTA_CLIENT_SECRET'),
                 'jwks_uri': 'https://dev-70294059.okta.com/oauth2/default/v1/keys',
                 'api_base_url': 'https://dev-70294059.okta.com',
                 'access_token_url': 'https://dev-70294059.okta.com/oauth2/default/v1/token',
