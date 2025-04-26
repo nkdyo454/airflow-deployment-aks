@@ -23,7 +23,7 @@ config:
   logging:
     remote_logging: true
     remote_log_conn_id: aks-blob-logs
-    remote_base_log_folder: wasb://airflow-logs@airflowlogs101.blob.core.windows.net/airflow-logs
+    remote_base_log_folder: wasb-airflow-dev
 
   azure_remote_logging:
     remote_wasb_log_container: airflow-logs
