@@ -17,8 +17,6 @@ config:
     port: 5432
     db: airflow
 
-  airflowHome: /opt/airflow
-
   rbac:
     create: true
 
