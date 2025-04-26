@@ -1,7 +1,8 @@
 airflow:
   executor: KubernetesExecutor
 config:
-  AIRFLOW__CORE__EXECUTOR: KubernetesExecutor
+  AIRFLOW__CORE__EXECUTOR:
+    value: KubernetesExecutor
 
   image:
     repository: apache/airflow
