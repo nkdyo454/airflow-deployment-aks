@@ -1,24 +1,22 @@
 airflow:
-  executor: CeleryExecutor
-
+  executor: KubernetesExecutor
 config:
   AIRFLOW__CORE__EXECUTOR:
-    value: CeleryExecutor
-  AIRFLOW__CELERY__BROKER_URL:
-    value: redis://:password@airflow-redis:6379/0
-  AIRFLOW__CELERY__RESULT_BACKEND:
-    value: db+postgresql://airflow:airflow@airflow-db:5432/airflow
+    value: KubernetesExecutor
   airflowHome:
     value: /opt/airflow
+
   image:
     repository: apache/airflow
     tag: "2.5.1"
+
   database:
     user: airflow
     password: airflow
     host: airflow-db
     port: 5432
     db: airflow
+
   rbac:
     create: true
 
@@ -98,7 +96,7 @@ scheduler:
   replicas: 2
 
 workers:
-  replicas: 3
+  enabled: false
 
 dags:
   gitSync:
@@ -111,6 +109,7 @@ dags:
     sshKeySecret: airflow-ssh-secret
     knownHosts: |
       github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=
+
 
 resources:
   webserver:
@@ -134,10 +133,3 @@ resources:
     limits:
       memory: "2Gi"
       cpu: "1000m"
-
-# Redis
-redis:
-  enabled: true
-  password: password
-  persistence:
-    enabled: false
