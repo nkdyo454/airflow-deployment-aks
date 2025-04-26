@@ -95,6 +95,12 @@ webserver:
 scheduler:
   replicas: 2
 
+workers:
+  enabled: false   # 🚨 IMPORTANT: disable workers
+
+redis:
+  enabled: false 
+  
 dags:
   gitSync:
     enabled: true
