@@ -19,6 +19,14 @@ config:
 
   rbac:
     create: true
+    
+  logging:
+    remote_logging: true
+    remote_log_conn_id: aks-blob-logs
+    remote_base_log_folder: wasb://airflow-logs@airflowlogs101.blob.core.windows.net/airflow-logs
+
+  azure_remote_logging:
+    remote_wasb_log_container: airflow-logs
 
 webserver:
   webserverConfig: |
@@ -94,7 +102,13 @@ webserver:
 
 scheduler:
   replicas: 2
-
+  
+logs:
+  persistence:
+    enabled: true
+    existingClaim: airflow-logs
+    storageClassName: azurefile
+    
 dags:
   gitSync:
     enabled: true
