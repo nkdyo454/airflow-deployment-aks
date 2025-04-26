@@ -3,6 +3,8 @@ airflow:
 config:
   AIRFLOW__CORE__EXECUTOR:
     value: KubernetesExecutor
+  airflowHome:
+    value: /opt/airflow
 
   image:
     repository: apache/airflow
