@@ -139,6 +139,5 @@ resources:
 redis:
   enabled: true
   password: password
-  master:
-    persistence:
-      enabled: false
+  persistence:
+    enabled: false
