@@ -6,6 +6,7 @@ config:
   airflowHome:
     value: /opt/airflow
 
+
   image:
     repository: apache/airflow
     tag: "2.5.1"
