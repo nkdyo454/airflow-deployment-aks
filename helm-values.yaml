@@ -103,9 +103,6 @@ webserver:
 
 scheduler:
   replicas: 2
-workers:
-  replicas: 3
-
   extraContainers:
     - name: fluent-bit
       image: fluent/fluent-bit:2.2
@@ -131,6 +128,9 @@ workers:
       configMap:
         name: fluent-bit-config
         
+workers:
+  replicas: 3
+
 logs:
   persistence:
     enabled: true
