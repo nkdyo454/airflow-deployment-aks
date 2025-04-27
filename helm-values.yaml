@@ -103,11 +103,10 @@ webserver:
 
 scheduler:
   replicas: 2
-
 workers:
-  replicas: 3  # or however many workers you need
+  replicas: 3
 
-  extraContainers: |
+  extraContainers:
     - name: fluent-bit
       image: fluent/fluent-bit:2.2
       volumeMounts:
@@ -127,7 +126,7 @@ workers:
               name: fluent-bit-azure
               key: shared_key
 
-  extraVolumes: |
+  extraVolumes:
     - name: fluent-bit-config
       configMap:
         name: fluent-bit-config
