@@ -106,30 +106,7 @@ webserver:
 
 scheduler:
   replicas: 2
-  extraContainers:
-    - name: fluent-bit
-      image: fluent/fluent-bit:2.2
-      volumeMounts:
-        - name: logs
-          mountPath: /opt/airflow/logs
-        - name: fluent-bit-config
-          mountPath: /fluent-bit/etc
-      env:
-        - name: CUSTOMER_ID
-          valueFrom:
-            secretKeyRef:
-              name: fluent-bit-azure
-              key: customer_id
-        - name: SHARED_KEY
-          valueFrom:
-            secretKeyRef:
-              name: fluent-bit-azure
-              key: shared_key
 
-  extraVolumes:
-    - name: fluent-bit-config
-      configMap:
-        name: fluent-bit-config
         
 workers:
   replicas: 3
