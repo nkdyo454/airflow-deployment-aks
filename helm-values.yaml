@@ -35,10 +35,13 @@ webserver:
     from airflow.www.security import AirflowSecurityManager
     import requests
     import logging
+    import os
 
     log = logging.getLogger(__name__)
     OIDC_ISSUER = "https://dev-70294059.okta.com/oauth2/default"
 
+    CLIENT_ID = os.getenv("CLIENT_ID")
+    CLIENT_SECRET = os.getenv("CLIENT_SECRET")
     AUTH_TYPE = AUTH_OAUTH
     AUTH_ROLE_PUBLIC = 'Public'
     AUTH_USER_REGISTRATION = True
@@ -82,8 +85,8 @@ webserver:
             'icon': 'fa-circle-o',
             'token_key': 'access_token',
             'remote_app': {
-                'client_id': '0oaoelqqkzF52HT2J5d7',
-                'client_secret': 'MS5tiT2t6tlguCc1jOOEGYtzJIGvQ697Dh615ZPjJMScSTcjkXRfvAFW5-fWgazx',
+                'client_id': f"{CLIENT_ID}",
+                'client_secret': f"{CLIENT_SECRET}",
                 'jwks_uri': 'https://dev-70294059.okta.com/oauth2/default/v1/keys',
                 'api_base_url': 'https://dev-70294059.okta.com',
                 'access_token_url': 'https://dev-70294059.okta.com/oauth2/default/v1/token',
@@ -136,7 +139,13 @@ logs:
     enabled: true
     existingClaim: airflow-logs
     storageClassName: azurefile
-    
+secret:
+  - envName: "CLIENT_ID"
+    secretName: "okta-oauth-secret"
+    secretKey: "CLIENT_ID"
+  - envName: "CLIENT_SECRET"
+    secretName: "okta-oauth-secret"
+    secretKey: "CLIENT_SECRET"
 dags:
   gitSync:
     enabled: true
